@@ -1,38 +1,110 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+// import { useState } from 'react'
+// import reactLogo from './assets/react.svg'
+// import viteLogo from '/vite.svg'
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+//import LoginPage from "./Pages/LoginPage";
+import LoginPage from "./Pages/LoginPage";
+import CashierPage from "./Pages/CashierPage";
+import AdminProductsPage from "./Pages/AdminProductsPage"; // FIXE
+import AdminSalesPage from "./Pages/AdminSalesPage"; // FIXED
+import CEOReportPage from "./Pages/CEOReportPage";
+import DashboardLayout from "./components/DashboardLayout"; // layout wrapper
+import CashierDashboard from "./Pages/CashierDashboard";
+import CashierHistory from "./Pages/CashierHistory"; // new pag
+
 import './App.css'
 
+
+// Protect routes based on login + role
+function PrivateRoute({ children, role }) {
+  const token = localStorage.getItem("token");
+  const userRole = localStorage.getItem("role");
+
+  if (!token) {
+    return <Navigate to="/login" />;
+  }
+
+  if (role && role !== userRole) {
+    return <Navigate to="/login" />;
+  }
+
+  return children;
+}
+
+
 function App() {
-  const [count, setCount] = useState(0)
+  // const [count, setCount] = useState(0)
 
   return (
-    <>
+    <Router>
+      <Routes>
+        {/* Auth */}
+        <Route path="/login" element={<LoginPage />} />
 
-    <h1 class="text-3xl font-bold text-blue-500 underline">
-      Hello world!
-    </h1>
-      {/* <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p> */}
-    </>
+         {/* Cashier Pages */}
+        <Route
+          path="/cashier/dashboard"
+          element={
+            <PrivateRoute role="cashier">
+              <DashboardLayout>
+                <CashierDashboard />
+              </DashboardLayout>
+            </PrivateRoute>
+          }
+        />
+
+        {/* Cashier Pages */}
+        <Route
+          path="/cashier/history"
+          element={
+            <PrivateRoute role="cashier">
+              <DashboardLayout>
+                <CashierHistory />
+              </DashboardLayout>
+            </PrivateRoute>
+          }
+        />
+
+        {/* Cashier Dashboard */}
+        <Route
+          path="/cashier/sale"
+          element={
+            <PrivateRoute role="cashier">
+              <CashierPage />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Admin Dashboard */}
+        <Route
+          path="/admin/products"
+          element={
+            <PrivateRoute role="admin">
+              <AdminProductsPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin/sales"
+          element={
+            <PrivateRoute role="admin">
+              <AdminSalesPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin/reports"
+          element={
+            <PrivateRoute role="admin">
+              <CEOReportPage />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Default redirect */}
+        <Route path="*" element={<Navigate to="/login" />} />
+      </Routes>
+    </Router>
   )
 }
 
