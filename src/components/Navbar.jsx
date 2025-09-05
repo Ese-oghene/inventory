@@ -12,6 +12,8 @@ const Navbar = ({ onToggleSidebar }) => {
         >
           <Menu size={20} />
         </button>
+         {/* <h1 className="text-xl font-bold tracking-wide">KIMVIA'S LUXURIES</h1> */}
+      
         <h1 className="text-xl font-bold tracking-wide">Sales Inventory</h1>
       </div>
 

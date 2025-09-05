@@ -1,12 +1,23 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { X, Home, ShoppingCart, History, RotateCcw, Package, BarChart3, Layers, Users, Settings, FileText } from "lucide-react";
+import {
+  X,
+  Home,
+  ShoppingCart,
+  History,
+  RotateCcw,
+  Package,
+  BarChart3,
+  Layers,
+  Users,
+  Settings,
+  FileText,
+  ClipboardList
+} from "lucide-react";
 
 const Sidebar = ({ role, onClose }) => {
-  console.log("Sidebar role:", role);
-
-  // helper function for link classes
-  const linkClasses = "flex items-center gap-3 px-3 py-2 rounded hover:bg-primary hover:text-white transition";
+  const linkClasses =
+    "flex items-center gap-3 px-3 py-2 rounded hover:bg-primary hover:text-white transition";
 
   return (
     <aside className="bg-gray-100 text-black w-64 h-full flex flex-col p-6 shadow-lg">
@@ -62,11 +73,18 @@ const Sidebar = ({ role, onClose }) => {
                 <BarChart3 size={18} /> Sales
               </Link>
             </li>
-            <li>
+
+             <li>
+              <Link to="/admin/inventory" className={linkClasses} onClick={onClose}>
+                <Layers size={18} /> Add Product
+              </Link>
+            </li>
+
+            {/* <li>
               <Link to="/admin/inventory" className={linkClasses} onClick={onClose}>
                 <Layers size={18} /> Inventory
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link to="/admin/categories" className={linkClasses} onClick={onClose}>
                 <ClipboardList size={18} /> Categories
@@ -91,11 +109,13 @@ const Sidebar = ({ role, onClose }) => {
         )}
       </ul>
 
-      <footer className="mt-auto text-sm text-gray-600">
-        © {new Date().getFullYear()} Sales Inventory
-      </footer>
+        <footer className="mt-auto text-sm text-gray-600">
+          © {new Date().getFullYear()} Sales Inventory. Powered by{" "}
+          <span className="font-bold text-primary">NextCore Technology</span>
+        </footer>
     </aside>
   );
 };
 
 export default Sidebar;
+

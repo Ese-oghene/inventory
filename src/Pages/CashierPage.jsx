@@ -14,11 +14,17 @@ const CashierPage = () => {
     if (existing) {
       setCart(
         cart.map((item) =>
-          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+
+            item.id === product.id
+          ? { ...item, quantity: item.quantity + product.quantity } // ✅ add the chosen quantity
+          : item
+          
+          // item.id === product.id ? { ...item, quantity: item.quantity + product.quantity } : item
         )
       );
     } else {
-      setCart([...cart, { ...product, quantity: 1 }]);
+      setCart([...cart, { ...product, quantity: product.quantity}]);
+  
     }
   };
 

@@ -7,3 +7,19 @@
   --color-black: #000000;
   --color-white: #FFFFFF;
 }
+
+
+@media print {
+  body * {
+    visibility: hidden; /* hide everything */
+  }
+  .print-area, .print-area * {
+    visibility: visible; /* show only report */
+  }
+  .print-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+}
