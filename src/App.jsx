@@ -6,7 +6,8 @@ import AdminSalesPage from "./Pages/AdminSalesPage"; // FIXED
 import CEOReportPage from "./Pages/CEOReportPage";
 import DashboardLayout from "./components/DashboardLayout"; // layout wrapper
 import CashierDashboard from "./Pages/CashierDashboard";
-import CashierHistory from "./Pages/CashierHistory"; // new pag
+import CashierHistory from "./Pages/CashierHistory"; // new bag
+import AdminProductForm from "./Pages/AdminProductForm";
 
 import './App.css'
 
@@ -96,6 +97,25 @@ function App() {
             </PrivateRoute>
           }
         />
+
+        <Route
+          path="/admin/products/new"
+          element={
+            <PrivateRoute role="admin">
+              <AdminProductForm />
+            </PrivateRoute>
+          }
+        />
+
+
+        <Route
+        path="/admin/products/:id/edit"
+        element={
+          <PrivateRoute role="admin">
+            <AdminProductForm />
+          </PrivateRoute>
+        }
+      />
 
         {/* Default redirect */}
         <Route path="*" element={<Navigate to="/login" />} />

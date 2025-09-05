@@ -75,7 +75,7 @@ const Sidebar = ({ role, onClose }) => {
             </li>
 
              <li>
-              <Link to="/admin/inventory" className={linkClasses} onClick={onClose}>
+              <Link to="/admin/products/new" className={linkClasses} onClick={onClose}>
                 <Layers size={18} /> Add Product
               </Link>
             </li>
