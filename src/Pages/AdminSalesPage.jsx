@@ -54,24 +54,26 @@ const AdminSalesPage = () => {
   };
 
   return (
-    <DashboardLayout>
-      <h1 className="text-xl font-bold mb-4">All Sales</h1>
+    
+    <div className="space-y-6">
+        <h1 className="text-xl font-bold mb-4">All Sales</h1>
 
       {loading ? (
         <p>Loading...</p>
       ) : sales.length === 0 ? (
         <p>No sales available</p>
       ) : (
-        <div className="overflow-x-auto">
+        <div className="">
           <table className="w-full border rounded-lg overflow-hidden shadow">
             <thead className="bg-gray-200 text-left">
               <tr>
                 <th className="px-4 py-2 border">ID</th>
                 <th className="px-4 py-2 border">Cashier</th>
                 <th className="px-4 py-2 border">Date</th>
+                 <th className="px-4 py-2 border">Payment Method</th> {/* ✅ new */}
                 <th className="px-4 py-2 border">Products Sold</th>
                 <th className="px-4 py-2 border">Total Amount</th>
-                <th className="px-4 py-2 border">Actions</th>
+                {/* <th className="px-4 py-2 border">Actions</th> */}
               </tr>
             </thead>
             <tbody>
@@ -80,6 +82,7 @@ const AdminSalesPage = () => {
                   <td className="px-4 py-2">{sale.id}</td>
                   <td className="px-4 py-2">{sale.cashier}</td>
                   <td className="px-4 py-2">{sale.sale_date}</td>
+                   <td className="px-4 py-2 capitalize">{sale.payment_method}</td> {/* ✅ show method */}
                   <td className="px-4 py-2">
                     {sale.items.map((item) => (
                       <div key={item.product_id}>
@@ -88,14 +91,14 @@ const AdminSalesPage = () => {
                     ))}
                   </td>
                   <td className="px-4 py-2">₦{sale.total_amount}</td>
-                  <td className="px-4 py-2">
+                  {/* <td className="px-4 py-2">
                     <button
                       onClick={() => printReceipt(sale)}
                       className="flex items-center gap-1 px-3 py-1 bg-primary text-white rounded hover:bg-primary-dark"
                     >
                       <Printer size={16} /> Print
                     </button>
-                  </td>
+                  </td> */}
                 </tr>
               ))}
             </tbody>
@@ -126,29 +129,11 @@ const AdminSalesPage = () => {
           </button>
         </div>
 
-          {/* Pagination */}
-          {/* <div className="flex justify-between mt-4">
-            <button
-              onClick={handlePrev}
-              disabled={meta.current_page <= 1}
-              className="flex items-center gap-1 px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
-            >
-              <ChevronLeft size={16} /> Prev
-            </button>
-            <span>
-              Page {meta.current_page} of {meta.last_page}
-            </span>
-            <button
-              onClick={handleNext}
-              disabled={meta.current_page >= meta.last_page}
-              className="flex items-center gap-1 px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
-            >
-              Next <ChevronRight size={16} />
-            </button>
-          </div> */}
         </div>
       )}
-    </DashboardLayout>
+      </div>
+    
+    
   );
 };
 

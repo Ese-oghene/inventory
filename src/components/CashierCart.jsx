@@ -1,41 +1,6 @@
-// import React from 'react'
-
-// const CashierCart = ({ cart, onCheckout }) => {
-
-//     const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
-//   return (
-//      <div className="bg-white p-4 shadow rounded mt-4">
-//       <h2 className="font-bold mb-2">Cart</h2>
-//       {cart.length === 0 ? <p>No items in cart.</p> : (
-//         <ul>
-//           {cart.map((item, i) => (
-//             <li key={i} className="flex justify-between">
-//               <span>{item.name} (x{item.quantity})</span>
-//               <span>{item.price * item.quantity}₦</span>
-//             </li>
-//           ))}
-//         </ul>
-//       )}
-//       <p className="mt-2 font-bold">Total: {total}₦</p>
-//       <button
-//          onClick={() => onCheckout(cart)}
-//         className="mt-2 bg-brown-700 text-black px-3 py-1 rounded"
-//       >
-//         Checkout
-//       </button>
-//     </div>
-//   )
-// }
-
-// export default CashierCart
-
-
-
-
 import React from "react";
 
-const CashierCart = ({ cart, onCheckout }) => {
+const CashierCart = ({ cart, onCheckout, paymentMethod, setPaymentMethod}) => {
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
@@ -62,6 +27,23 @@ const CashierCart = ({ cart, onCheckout }) => {
       <p className="mt-4 text-lg font-bold text-gray-800">
         Total: <span className="text-primary">₦{total}</span>
       </p>
+
+      {/* Payment Method */}
+      <div className="mt-4">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Payment Method
+        </label>
+        <select
+          value={paymentMethod}
+          onChange={(e) => setPaymentMethod(e.target.value)}
+          className="w-full border px-3 py-2 rounded-lg"
+        >
+          <option value="cash">💵 Cash</option>
+          <option value="transfer">🏦 Bank Transfer</option>
+          <option value="card">💳 ATM Card</option>
+        </select>
+      </div>
+
 
       <button
         onClick={() => onCheckout(cart)}

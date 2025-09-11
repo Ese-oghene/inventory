@@ -1,14 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ShoppingCart, DollarSign, Package } from "lucide-react";
+import api from "../api/api"; 
 
-const CashierDashboar = () => {
+const CashierDashboard = () => {
+  const [todaySales, setTodaySales] = useState(0);
+
+  // Fetch dashboard stats from backend
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await api.get("/cashier/dashboard-stats");
+        setTodaySales(res.data.today_sales || 0);
+      } catch (err) {
+        console.error("Failed to fetch dashboard stats", err);
+      }
+    };
+
+    fetchStats();
+  }, []);
+
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold mb-4">Welcome, Cashier!</h1>
 
       {/* Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* New Sale */}
         <div className="bg-white shadow-lg rounded-xl p-4 flex items-center gap-4">
           <ShoppingCart size={32} className="text-primary" />
           <div>
@@ -22,19 +40,21 @@ const CashierDashboar = () => {
           </div>
         </div>
 
+        {/* Today’s Sales */}
         <div className="bg-white shadow-lg rounded-xl p-4 flex items-center gap-4">
           <DollarSign size={32} className="text-primary" />
           <div>
             <p className="text-gray-500 text-sm">Today’s Sales</p>
-            <p className="text-black font-semibold">₦120,000</p>
+            <p className="text-black font-semibold">₦{todaySales}</p>
           </div>
         </div>
 
+        {/* Pending Orders (optional, leave static for now) */}
         <div className="bg-white shadow-lg rounded-xl p-4 flex items-center gap-4">
           <Package size={32} className="text-primary" />
           <div>
             <p className="text-gray-500 text-sm">Pending Orders</p>
-            <p className="text-black font-semibold">8</p>
+            <p className="text-black font-semibold">0</p>
           </div>
         </div>
       </div>
@@ -64,7 +84,8 @@ const CashierDashboar = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CashierDashboar
+export default CashierDashboard;
+

@@ -85,11 +85,11 @@ const Sidebar = ({ role, onClose }) => {
                 <Layers size={18} /> Inventory
               </Link>
             </li> */}
-            <li>
+            {/* <li>
               <Link to="/admin/categories" className={linkClasses} onClick={onClose}>
                 <ClipboardList size={18} /> Categories
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link to="/admin/reports" className={linkClasses} onClick={onClose}>
                 <FileText size={18} /> CEO Reports

@@ -57,12 +57,14 @@ const CashierHistory = () => {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <table className="min-w-full bg-white shadow rounded-lg overflow-hidden">
+        <div className="overflow-x-auto">
+           <table className="min-w-full bg-white shadow rounded-lg">
           <thead className="bg-gray-200 text-left">
             <tr>
               <th className="px-4 py-2">ID</th>
               <th className="px-4 py-2">Cashier</th>
               <th className="px-4 py-2">Date</th>
+              <th className="px-4 py-2">Payment Method</th>
               <th className="px-4 py-2">Total</th>
               <th className="px-4 py-2">Actions</th>
             </tr>
@@ -73,6 +75,7 @@ const CashierHistory = () => {
                 <td className="px-4 py-2">{sale.id}</td>
                 <td className="px-4 py-2">{sale.cashier}</td>
                 <td className="px-4 py-2">{new Date(sale.sale_date).toLocaleString()}</td>
+                <td className="px-4 py-2 capitalize">{sale.payment_method}</td> {/* ✅ show method */}
                 <td className="px-4 py-2">₦{sale.total_amount}</td>
                 <td className="px-4 py-2">
                   <button
@@ -86,6 +89,8 @@ const CashierHistory = () => {
             ))}
           </tbody>
         </table>
+        </div>
+       
       )}
 
       {/* Pagination */}
