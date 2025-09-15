@@ -12,6 +12,7 @@ import {
   Users,
   Settings,
   FileText,
+   User ,
   ClipboardList
 } from "lucide-react";
 
@@ -52,11 +53,11 @@ const Sidebar = ({ role, onClose }) => {
                 <History size={18} /> Sales History
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="/cashier/returns" className={linkClasses} onClick={onClose}>
                 <RotateCcw size={18} /> Returns
               </Link>
-            </li>
+            </li> */}
           </>
         )}
 
@@ -80,31 +81,28 @@ const Sidebar = ({ role, onClose }) => {
               </Link>
             </li>
 
-            {/* <li>
-              <Link to="/admin/inventory" className={linkClasses} onClick={onClose}>
-                <Layers size={18} /> Inventory
-              </Link>
-            </li> */}
-            {/* <li>
-              <Link to="/admin/categories" className={linkClasses} onClick={onClose}>
-                <ClipboardList size={18} /> Categories
-              </Link>
-            </li> */}
+    
             <li>
               <Link to="/admin/reports" className={linkClasses} onClick={onClose}>
                 <FileText size={18} /> CEO Reports
               </Link>
             </li>
+
+  
+            {/* ✅ Admin Profile */}
+            <li>
+              <Link to="/admin/profile" className={linkClasses} onClick={onClose}>
+                <User size={18} /> My Profile
+              </Link>
+            </li>
+
+
             <li>
               <Link to="/admin/users" className={linkClasses} onClick={onClose}>
                 <Users size={18} /> User Management
               </Link>
             </li>
-            <li>
-              <Link to="/admin/settings" className={linkClasses} onClick={onClose}>
-                <Settings size={18} /> Settings
-              </Link>
-            </li>
+            
           </>
         )}
       </ul>

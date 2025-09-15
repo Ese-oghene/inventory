@@ -8,6 +8,9 @@ import DashboardLayout from "./components/DashboardLayout"; // layout wrapper
 import CashierDashboard from "./Pages/CashierDashboard";
 import CashierHistory from "./Pages/CashierHistory"; // new bag
 import AdminProductForm from "./Pages/AdminProductForm";
+import AdminProfilePage from "./Pages/AdminProfilePage";
+import UserManagementPage from "./Pages/UserManagementPage";
+import UserFormPage from "./Pages/UserFormPage";
 
 import './App.css'
 
@@ -66,7 +69,9 @@ function App() {
           path="/cashier/sale"
           element={
             <PrivateRoute role="cashier">
-              <CashierPage />
+              <DashboardLayout>
+                  <CashierPage />
+              </DashboardLayout>
             </PrivateRoute>
           }
         />
@@ -120,6 +125,51 @@ function App() {
 
         {/* Default redirect */}
         <Route path="*" element={<Navigate to="/login" />} />
+
+    <Route
+      path="/admin/profile"
+      element={
+        <PrivateRoute role="admin">
+          <DashboardLayout>
+            <AdminProfilePage />
+          </DashboardLayout>
+        </PrivateRoute>
+      }
+    />
+
+    <Route
+      path="/admin/users"
+      element={
+        <PrivateRoute role="admin">
+          <DashboardLayout>
+            <UserManagementPage />
+          </DashboardLayout>
+        </PrivateRoute>
+      }
+    />
+
+
+    <Route
+      path="/admin/users/new"
+      element={
+        <PrivateRoute role="admin">
+          <DashboardLayout>
+            <UserFormPage />
+          </DashboardLayout>
+        </PrivateRoute>
+      }
+    />
+
+    <Route
+      path="/admin/users/:id/edit"
+      element={
+        <PrivateRoute role="admin">
+          <DashboardLayout> 
+          <UserFormPage />
+          </DashboardLayout>
+        </PrivateRoute>
+      }
+    />
       </Routes>
     </Router>
   )

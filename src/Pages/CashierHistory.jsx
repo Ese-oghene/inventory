@@ -116,3 +116,5 @@ const CashierHistory = () => {
 };
 
 export default CashierHistory;
+
+
