@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ShoppingCart, DollarSign, Package } from "lucide-react";
+import { ShoppingCart, Package } from "lucide-react";
 import api from "../api/api"; 
 
 const CashierDashboard = () => {
-  const [todaySales, setTodaySales] = useState(0);
+  const [todayProductSales, setTodayProductSales] = useState(0);
 
-  // Fetch dashboard stats from backend
   useEffect(() => {
     const fetchStats = async () => {
       try {
         const res = await api.get("/cashier/dashboard-stats");
-        setTodaySales(res.data.today_sales || 0);
+        setTodayProductSales(res.data.today_product_sales || 0);
       } catch (err) {
         console.error("Failed to fetch dashboard stats", err);
       }
@@ -40,16 +39,16 @@ const CashierDashboard = () => {
           </div>
         </div>
 
-        {/* Today’s Sales */}
+        {/* Today’s Product Sales */}
         <div className="bg-white shadow-lg rounded-xl p-4 flex items-center gap-4">
-          <DollarSign size={32} className="text-primary" />
+          <Package size={32} className="text-primary" />
           <div>
-            <p className="text-gray-500 text-sm">Today’s Sales</p>
-            <p className="text-black font-semibold">₦{todaySales}</p>
+            <p className="text-gray-500 text-sm">Today’s Product Sales</p>
+            <p className="text-black font-semibold">{todayProductSales}</p>
           </div>
         </div>
 
-        {/* Pending Orders (optional, leave static for now) */}
+        {/* Pending Orders (static for now) */}
         <div className="bg-white shadow-lg rounded-xl p-4 flex items-center gap-4">
           <Package size={32} className="text-primary" />
           <div>
@@ -75,12 +74,6 @@ const CashierDashboard = () => {
           >
             Sales History
           </Link>
-          <Link
-            to="/cashier/returns"
-            className="bg-gray-200 text-black px-4 py-2 rounded shadow hover:bg-gray-300 transition"
-          >
-            Returns
-          </Link>
         </div>
       </div>
     </div>
@@ -88,4 +81,5 @@ const CashierDashboard = () => {
 };
 
 export default CashierDashboard;
+
 

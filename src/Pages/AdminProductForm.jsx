@@ -5,7 +5,7 @@ import DashboardLayout from "../components/DashboardLayout";
 
 const AdminProductForm = () => {
   const navigate = useNavigate();
-  const { id } = useParams(); // if present → update mode
+  const { id } = useParams(); // backend expects id for update
 
   const [formData, setFormData] = useState({
     category_id: "",
@@ -42,20 +42,25 @@ const AdminProductForm = () => {
   // Load product if editing
   useEffect(() => {
     if (id) {
-      api.get(`/products/${id}`).then((res) => {
-        const p = res.data.data;
-        setFormData({
-          category_id: p.category_id || "",
-          name: p.name,
-          sku: p.sku,
-          description: p.description || "",
-          price: p.price,
-          stock_qty: p.stock_qty,
-          color: p.color || "",
-          image: null, // don’t preload file
+      api
+        .get(`/products/${id}`) // ✅ Backend "show" uses SKU, so make sure you pass sku in route params
+        .then((res) => {
+          const p = res.data.data;
+          setFormData({
+            category_id: p.category_id || "",
+            name: p.name,
+            sku: p.sku,
+            description: p.description || "",
+            price: p.price,
+            stock_qty: p.stock_qty,
+            color: p.color || "",
+            image: null, // don’t preload file
+          });
+          setImagePreview(p.image_url || null);
+        })
+        .catch((err) => {
+          console.error("Failed to fetch product", err);
         });
-        setImagePreview(p.image_url || null);
-      });
     }
   }, [id]);
 
@@ -83,6 +88,7 @@ const AdminProductForm = () => {
       });
 
       if (id) {
+        // ✅ Update expects product id
         await api.post(`/products/${id}?_method=PUT`, data, {
           headers: { "Content-Type": "multipart/form-data" },
         });
@@ -180,7 +186,7 @@ const AdminProductForm = () => {
             onChange={handleChange}
             className="w-full border px-3 py-2 rounded"
             required
-            disabled={!!id}
+           // disabled={!!id} // SKU locked when updating
           />
         </div>
 
@@ -298,3 +304,4 @@ const AdminProductForm = () => {
 };
 
 export default AdminProductForm;
+
