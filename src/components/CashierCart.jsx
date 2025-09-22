@@ -1,6 +1,14 @@
 import React from "react";
 
-const CashierCart = ({ cart, onCheckout, paymentMethod, setPaymentMethod}) => {
+const CashierCart = ({
+  cart,
+  onCheckout,
+  paymentMethod,
+  setPaymentMethod,
+  onRemoveItem,
+  onDecreaseQuantity,
+  onIncreaseQuantity,
+}) => {
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
@@ -12,13 +20,24 @@ const CashierCart = ({ cart, onCheckout, paymentMethod, setPaymentMethod}) => {
       ) : (
         <ul className="divide-y divide-gray-200">
           {cart.map((item, i) => (
-            <li key={i} className="flex justify-between py-2">
-              <span className="text-gray-800">
-                {item.name} <span className="text-gray-500">(x{item.quantity})</span>
-              </span>
-              <span className="font-medium text-gray-700">
-                ₦{item.price * item.quantity}
-              </span>
+            <li key={i} className="flex justify-between items-center py-2">
+              <div>
+                <span className="text-gray-800">
+                  {item.name} <span className="text-gray-500">(x{item.quantity})</span>
+                </span>
+                <span className="ml-3 font-medium text-gray-700">
+                  ₦{item.price * item.quantity}
+                </span>
+              </div>
+              <div className="flex space-x-2">
+              
+                <button
+                  onClick={() => onRemoveItem(i)}
+                  className="text-red-500 hover:text-red-700 text-sm"
+                >
+                  ❌
+                </button>
+              </div>
             </li>
           ))}
         </ul>
@@ -44,10 +63,10 @@ const CashierCart = ({ cart, onCheckout, paymentMethod, setPaymentMethod}) => {
         </select>
       </div>
 
-
       <button
         onClick={() => onCheckout(cart)}
-        className="mt-4 w-full bg-primary hover:bg-primary-dark text-white px-5 py-2 rounded-lg shadow transition"
+        // disabled={cart.length === 0}
+        className="mt-4 w-full bg-primary hover:bg-primary-dark text-white px-5 py-2 rounded-lg shadow transition disabled:opacity-50"
       >
         ✅ Checkout
       </button>

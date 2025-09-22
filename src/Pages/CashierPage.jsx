@@ -10,20 +10,48 @@ const CashierPage = () => {
   const [receiptModal, setReceiptModal] = useState(false);
   const [lastSale, setLastSale] = useState(null);
 
+  // 🔹 Add product to cart
   const addToCart = (product) => {
-    const existing = cart.find((item) => item.id === product.id);
-    if (existing) {
-      setCart(
-        cart.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + product.quantity }
-            : item
-        )
-      );
-    } else {
-      setCart([...cart, { ...product, quantity: product.quantity }]);
-    }
+    setCart((prevCart) => {
+      const existingIndex = prevCart.findIndex((item) => item.id === product.id);
+      if (existingIndex !== -1) {
+        const updated = [...prevCart];
+        updated[existingIndex].quantity += product.quantity;
+        return updated;
+      }
+      return [...prevCart, { ...product, quantity: product.quantity }];
+    });
   };
+
+  // 🔹 Remove item completely
+  const removeFromCart = (index) => {
+  const newCart = cart.filter((item, i) => i !== index);
+  setCart(newCart);
+  };
+
+
+  // const removeFromCart = (index) => {
+  //   setCart(cart.filter((_, i) => i !== index));
+  // };
+
+  // 🔹 Decrease quantity
+  const decreaseQuantity = (index) => {
+    setCart((prevCart) =>
+      prevCart.map((item, i) =>
+        i === index ? { ...item, quantity: item.quantity - 1 } : item
+      )
+    );
+  };
+
+  // 🔹 Increase quantity
+  const increaseQuantity = (index) => {
+    setCart((prevCart) =>
+      prevCart.map((item, i) =>
+        i === index ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    );
+  };
+
 
   const checkout = async () => {
     try {
@@ -180,6 +208,9 @@ const CashierPage = () => {
         paymentMethod={paymentMethod}
         setPaymentMethod={setPaymentMethod}
         onCheckout={checkout}
+        onRemoveItem={removeFromCart}          // ✅ added
+        // onDecreaseQuantity={decreaseQuantity}  // ✅ added
+      // onIncreaseQuantity={increaseQuantity}  // ✅ added
       />
 
       {/* ✅ Receipt Modal */}
@@ -219,3 +250,17 @@ const CashierPage = () => {
 export default CashierPage;
 
 
+  // const addToCart = (product) => {
+  //   const existing = cart.find((item) => item.id === product.id);
+  //   if (existing) {
+  //     setCart(
+  //       cart.map((item) =>
+  //         item.id === product.id
+  //           ? { ...item, quantity: item.quantity + product.quantity }
+  //           : item
+  //       )
+  //     );
+  //   } else {
+  //     setCart([...cart, { ...product, quantity: product.quantity }]);
+  //   }
+  // };
